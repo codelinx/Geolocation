@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<script src="cordova.js"></script>
+<script src="jquery-1.10.2.js"></script>
+<script src="thisapp.js"></script>
+<script src="zepto.js"></script>
+<script src="silly.js"></script>
+<script>
+	// Wait for device API libraries to load
+	//
+	//document.addEventListener("deviceready", geolocation, false);
+
+	//var watchID = null;
+
+	// device APIs are available
+	//
+	function geolocation() {
+		var options = {
+				maximumAge:3000,timeout:5000,enableHighAccuracy:true
+		};
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, options);
+
+		// onSuccess Geolocation
+		//
+		function onSuccess(position) {
+			var element = document.getElementById('geolocation');
+
+			var lat = position.coords.latitude;
+			var lng = position.coords.longitude;/*
+								var alt = position.coords.altitude;
+								var acc = position.coords.accuracy;
+								var altacc = position.coords.altitudeAccuracy;
+								var heading = position.coords.heading;
+								var speed = position.coords.speed;*/
+			var time = position.timestamp;
+			
+			// Google maps code					
+			/*var currentPosition = new google.maps.LatLng(lat,lng);
+			var mapOptions = {zoom: 12, center: currentPosition, mapTypeId: google.maps.MapTypeId.ROADMAP }
+			
+			var map = new google.maps.Map(document.getElementById("map"));
+			
+			var marker = new google.maps.Marker({
+				position: currentPosition, map: map
+			})*/
+			
+			// Google maps code
+			element.innerHTML = 'Latitude: ' + lat + '<br />' + 'Longitude: '
+					+ lng + '<br />' +
+					/*
+						+ '<br />' + 'Altitude: ' + alt
+						+ '<br />' + 'Accuracy: ' + altacc
+						+ '<br />' + 'Altitude Accuracy: '
+						+ '<br />' + 'Heading: '	+ heading + '<br />' 
+						+ 'Speed: ' + speed + '<br />'*/
+					'Timestamp: ' + time + '<br />';
+		}
+		document.write('Latitude: ' + lat + '<br />' + 'Longitude: ' + lng
+				+ '<br />' + 'Timestamp: ' + time + '<br />');
+
+		
+		// onError Callback receives a PositionError object
+		//
+		function onError(error) {
+			alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+		}
+	}
+
+
+	
+	
+</script>
+<head>
+<title>Device Information</title>
+</head>
+
+<body onLoad="DOMloaded()">
+	<div id="deviceInfo">Loading the device information ...</div>
+	<button id="silly">Get date</button>
+	<button id="clear">Clear</button>
+	<div id="results"></div>
+
+	<script>
+		$('#silly').click(function() {
+			SILLY.DoIt($('#results'));
+		});
+		$('#clear').click(function() {
+			$('#results').html('');
+		});
+	</script>
+
+	<p id="geolocation">Finding geo location...</p>
+
+
+
+</body>
+</html>
